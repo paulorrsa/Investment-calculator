@@ -6,17 +6,19 @@ import Results from "./components/Results";
 
 function App() {
   const [userIput, setUserIpunt] = useState({
-    initialInvestiment: 10000,
-    annualInvestiment: 1200,
-    expectecReturn: 6,
+    initialInvestment: 10000,
+    annualInvestment: 1200,
+    expectedReturn: 6,
     duration: 10,
   });
+
+  const inputIsValid = userIput.duration >= 1;
 
   function handleChange(inputIndetifier, newValue) {
     setUserIpunt((prevUserInput) => {
       return {
         ...prevUserInput,
-        [inputIndetifier]: newValue,
+        [inputIndetifier]: +newValue,
       };
     });
   }
@@ -24,7 +26,8 @@ function App() {
     <>
       <Header />
       <UserInput userIput={userIput} onChange={handleChange}/>
-      <Results input={userIput}/>
+      {!inputIsValid && <p className="center">Please enter a duration greater than zero.</p>}
+      {inputIsValid && <Results input={userIput}/>}
     </>
   );
 }
